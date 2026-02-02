@@ -14,6 +14,7 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserResponseDto } from './dtos/user-response.dto';
 
 @Controller('auth')
+@Serialize(UserResponseDto)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -22,7 +23,6 @@ export class UsersController {
     await this.usersService.create(body.email, body.password);
   }
 
-  @Serialize(UserResponseDto)
   @Get('/allUsers')
   async allUsers() {
     return await this.usersService.findAll();
