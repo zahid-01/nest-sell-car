@@ -7,11 +7,12 @@ import {
   Patch,
   Post,
   UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { SerializeInterceptor } from '../interceptors/serialize.interceptor';
+import { UserResponseDto } from './dtos/user-response.dto';
 
 @Controller('auth')
 export class UsersController {
@@ -22,7 +23,7 @@ export class UsersController {
     await this.usersService.create(body.email, body.password);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(new SerializeInterceptor(UserResponseDto))
   @Get('/allUsers')
   async allUsers() {
     return await this.usersService.findAll();

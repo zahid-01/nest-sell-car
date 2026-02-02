@@ -16,11 +16,7 @@ export class UsersService {
   }
 
   async findAll() {
-    const users = await this.repo.find();
-
-    users.forEach((el) => console.log(el.email));
-
-    return users;
+    return await this.repo.find();
   }
 
   async findOne(id: number) {
