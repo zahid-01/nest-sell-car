@@ -12,7 +12,7 @@ export class UsersService {
   async create(email: string, password: string) {
     const user = this.repo.create({ email, password });
 
-    await this.repo.save(user);
+    return await this.repo.save(user);
   }
 
   async findAll() {
@@ -21,6 +21,10 @@ export class UsersService {
 
   async findOne(id: number) {
     return this.repo.findOneBy({ id });
+  }
+
+  async find(email: string) {
+    return await this.repo.findOne({ where: { email } });
   }
 
   async update(id: number, attr: Partial<UserEntity>) {
